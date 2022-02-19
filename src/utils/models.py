@@ -1,6 +1,6 @@
-from re import M
+
 from tensorflow import keras
-from typing import List,Sequence,TypeVar
+from typing import List,TypeVar
 from pathlib import Path
 import logging
 
@@ -39,6 +39,13 @@ def prepared_model(model:keras_model
                 ,loss=keras.losses.CategoricalCrossentropy())
     logging.info("Ready to train our own model is compile")
     
+    return model
+
+def load_full_model(untrain_model_path:Path) -> keras_model:
+
+    model = keras.models.load_model(untrain_model_path)
+
+    logging.info("Loading model was successful")
     return model
 
 if __name__ == '__main__':

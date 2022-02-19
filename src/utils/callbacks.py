@@ -5,6 +5,9 @@ from tensorflow import keras
 import os 
 import joblib
 import logging
+from typing import TypeVar,List
+
+keras_calbacks = TypeVar("keras_calbacks")
 
 def create_and_save_tesnoboard_callbacks(callback_dir:Path,tensoboard_log_dir:Path) -> None:
     
@@ -32,3 +35,15 @@ def create_and_save_checkpint_callbacks(callback_dir:Path,checkpoint_dir:Path):
     joblib.dump(checkpoint_callback,ckpt_callback_path)
     logging.info(f'tensoboard call back is complete and save at {ckpt_callback_path}')
 
+
+def get_callbacks(callback_dir:Path) -> List[keras_calbacks]:
+    
+    callbacks_path = [
+        os.path.join(callback_dir,bin_files) for bin_files in os.listdir(callback_dir)
+    ]
+
+    callbacks = [
+        joblib.load(path) for path in callbacks_path
+    ]
+
+    return callbacks
