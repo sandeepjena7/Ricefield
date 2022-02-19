@@ -2,6 +2,7 @@
 from src.utils.allutills import Read_Yaml,Create_Dir
 from src.utils.callbacks import get_callbacks
 from src.utils.models import load_full_model
+from src.utils.datamangement import train_valid_genrator
 import argparse
 import  os
 from pathlib import Path
@@ -14,9 +15,9 @@ os.makedirs(log_dir, exist_ok=True)
 logging.basicConfig(filename=os.path.join(log_dir, 'running_logs.log'), level=logging.INFO, format=logging_str,
                     filemode="a")
 
-def train_model(config_path:Path) -> None:
+def train_model(config_path:Path,parmas_path:Path) -> None:
     config = Read_Yaml(config_path) 
-
+    params = Read_Yaml(parmas_path)
     artifact = config['artifacts'] 
     artifatcs_dir = artifact['Artifatcs_dir']
     train_model_dir = os.path.join(artifatcs_dir,artifact['Train_mode_dir'])
@@ -30,6 +31,13 @@ def train_model(config_path:Path) -> None:
 
     model = load_full_model(untrained_based_model_path)
     callbacks = get_callbacks(callback_dir)
+
+    train_gen,valid_gen = train_valid_genrator(
+                            data_dir=config['data_source']['Process_data_dir']
+                            ,img_size=tuple(params['img_shape'][:-1])
+                            ,batch_size=params['batch_size']
+                            ,do_data_agumentaion=params['augmentation']
+                            )
 
 
 if __name__ == '__main__':
