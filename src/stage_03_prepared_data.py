@@ -33,6 +33,6 @@ if __name__ == '__main__':
     try:
         logging.info("stage three started >>>>>>>>>>>")
         prepared_data(config=parsed_args.config)
-        logging.info("stage three is split dataset into (train,test,valid) folder  completed ................")
+        logging.info("stage three is split dataset into (train,test,valid) folder  completed ................\n")
     except Exception as e: 
-        logging.info(f"Error was occurred {e}")
+        logging.info(f"Error was occurred {e}\n")

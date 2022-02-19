@@ -39,10 +39,10 @@ if __name__ == '__main__':
     parsed_args = args.parse_args()
 
     try:
-        logging.info("stage four started >>>>>>>>>>>")
+        logging.info("stage six started >>>>>>>>>>>")
         train_model(config_path=parsed_args.config)
-        logging.info("stage four is callback create done was done  ................")
+        logging.info("stage six model was trained................\n")
     except Exception as e: 
-        logging.info(f"Error was occurred {e}")
+        logging.info(f"Error was occurred {e}\n\n")
 
 

@@ -39,6 +39,6 @@ if __name__ == '__main__':
     try:
         logging.info("stage two started >>>>>>>>>>>")
         extract_data(config=parsed_args.config)
-        logging.info("stage two is extract_data completed ................")
+        logging.info("stage two is extract_data completed ................\n")
     except Exception as e: 
-        logging.info(f"Error was occurred {e}")
+        logging.info(f"Error was occurred {e}\n")

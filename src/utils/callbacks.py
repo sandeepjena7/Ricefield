@@ -39,11 +39,12 @@ def create_and_save_checkpint_callbacks(callback_dir:Path,checkpoint_dir:Path):
 def get_callbacks(callback_dir:Path) -> List[keras_calbacks]:
     
     callbacks_path = [
-        os.path.join(callback_dir,bin_files) for bin_files in os.listdir(callback_dir)
+        os.path.join(callback_dir,bin_files) for bin_files in os.listdir(callback_dir) if bin_files.endswith('.cb')
     ]
 
     callbacks = [
         joblib.load(path) for path in callbacks_path
     ]
+    logging.info(f"callbacks was loaded from {callback_dir}")
 
     return callbacks
