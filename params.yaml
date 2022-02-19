@@ -1,0 +1,13 @@
+
+
+lr: 0.01
+momentum: 0.09
+batch_size: 32
+epochs: 1
+nesterov: True
+img_size: [48,48,3]
+classes: 2
+augmentation: True
+base_model: inspire_inseption
+
+

@@ -1,0 +1,39 @@
+stages:
+
+  load_data:
+    cmd: python src/get_data.py --config=config.yaml
+    deps:
+      - src/utils/common.py
+      - data/external/rice.tgz
+    outs:
+      - data/raw/rice
+
+  split_data:
+    cmd: python src/split_data.py --config=config.yaml
+    deps:
+      - src/utils/common.py
+      - src/split_data.py
+      - data/raw/rice
+    outs:
+      - data/processed/train
+      - data/processed/test
+      - data/processed/valid
+  
+  train_eval:
+    cmd: python src/train_eval.py --config=config.yaml --params=params.yaml 
+    deps:
+      - src/utils/common.py
+      - src/utils/helper.py
+      - src/utils/model.py
+      - src/utils/load_data.py
+    outs:
+      - prediction_service/model/model.pth:
+          checkpoint: true
+    live:
+      report/training_metrics:
+        summary: true
+        html: true
+
+  
+
+  

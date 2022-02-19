@@ -1,0 +1,32 @@
+base:
+  project: drone-counting-image
+  random_state: 7
+  predict: Drone_image
+
+
+data_source:
+  GithubLink: https://github.com/aipal-nchu/RiceSeedlingDataset
+  Download_data_dir: data/external
+  Dataset_name: rice.tgz
+  Raw_data_dir: data/raw
+  Process_data_dir: data/processed
+  Train: 0.70
+  Test: 0.20 
+  Valid: 0.10
+
+artifacts:
+  Artifatcs_dir: artifacts
+  Train_mode_dir: model
+  Based_model_dir: base_model
+  Based_model_name: ownmodel.h5
+  Checkpoint_dir: checkpoints
+  Base_log_dir: base_log
+  Tensorboard_dir: tensorboard_log_dir
+  Callback_dir: callback
+  
+
+
+
+  
+model_checkpoint: prediction_service/model
+
