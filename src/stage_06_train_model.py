@@ -43,12 +43,13 @@ def train_model(config_path:Path,parmas_path:Path) -> None:
 if __name__ == '__main__':
     args = argparse.ArgumentParser(description='get the data from bucket')
     args.add_argument('--config','-c',default='config/config.yaml')
+    args.add_argument('--params','-p',default='params.yaml')
 
     parsed_args = args.parse_args()
 
     try:
         logging.info("stage six started >>>>>>>>>>>")
-        train_model(config_path=parsed_args.config)
+        train_model(config_path=parsed_args.config,parmas_path=parsed_args.params)
         logging.info("stage six model was trained................\n")
     except Exception as e: 
         logging.info(f"Error was occurred {e}\n\n")

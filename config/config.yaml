@@ -28,6 +28,3 @@ artifacts:
 
 
 
-  
-model_checkpoint: prediction_service/model
-
