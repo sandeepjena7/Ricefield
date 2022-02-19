@@ -5,8 +5,9 @@ momentum: 0.09
 batch_size: 32
 epochs: 1
 nesterov: True
-img_size: [48,48,3]
+img_shape: [48,48,3]
 classes: 2
+metrics: [accuracy]
 augmentation: True
 base_model: inspire_inseption
 

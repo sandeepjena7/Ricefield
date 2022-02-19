@@ -1,5 +1,5 @@
-from src.utils.allutills import Read_Yaml,Create_Dir
-from src.utils.models import own_model
+from src.utils.allutills import Read_Yaml,Create_Dir,log_model_summary
+from src.utils.models import own_model,prepared_model
 import argparse
 import  os
 from typing import Optional
@@ -18,19 +18,31 @@ def prepared_base_model(config_path:Path,params_path:Path):
     params = Read_Yaml(params_path)
 
     artifact = config['artifacts'] 
-    artifacts_dir = artifact['Artifacts_dir']
-    base_model_dir = artifact['Base_model_dir']
-    base_model_name = artifact['Base_model_name']
 
-    base_model_dir_path = os.path.join(artifact,base_model_dir)
-    base_model_path = os.path.join(base_model_dir_path,base_model_name)
-
-    Create_Dir([artifacts_dir,base_model_dir_path])
+    artifatcs_dir = artifact['Artifatcs_dir']
+    base_model_dir = artifact["Based_model_dir"]
+    base_model_name = artifact["Based_model_name"]
+    updated_model_name = artifact['Updated_model_path']
     
-    model = own_model(input_shape=params['img_size'], )
+    base_model_dir_path = os.path.join(artifatcs_dir, base_model_dir)
+    base_model_path = os.path.join(base_model_dir_path, base_model_name)
+    
+    Create_Dir([artifatcs_dir,base_model_dir_path])
 
+    base_model = own_model(img_shape=params['img_shape']
+                        , num_classes=params['classes']
+                        ,model_path=base_model_path)
 
+    full_model = prepared_model(base_model 
+                                ,learning_rate=params['lr']
+                                ,momentum=params['momentum']
+                                ,nesterov=params['nesterov']
+                                ,metrics=params['metrics'])
 
+    updated_model_path = os.path.join(base_model_dir_path,updated_model_name)
+    full_model.save(updated_model_path)
+    logging.info(f'model summary was {log_model_summary(full_model)}')
+    logging.info(f'Updated model was saved at {updated_model_path}')
 
 
 

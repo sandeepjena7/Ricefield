@@ -19,6 +19,7 @@ artifacts:
   Train_mode_dir: model
   Based_model_dir: base_model
   Based_model_name: ownmodel.h5
+  Updated_model_path: upadated_ownmodel.h5
   Checkpoint_dir: checkpoints
   Base_log_dir: base_log
   Tensorboard_dir: tensorboard_log_dir
