@@ -18,5 +18,17 @@ def create_and_save_tesnoboard_callbacks(callback_dir:Path,tensoboard_log_dir:Pa
     logging.info(f'tensoboard call back is complete and save at {tb_callback_path}')
 
 
-def create_and_save_checkpint_callbacks(callback_dir:Path,checkpint_dir:Path):
-    pass
+def create_and_save_checkpint_callbacks(callback_dir:Path,checkpoint_dir:Path):
+    
+    checkpint_file = os.path.join(checkpoint_dir,'ckpt_model.h5')
+    checkpoint_callback = keras.callbacks.ModelCheckpoint(filepath=checkpint_file
+                                                ,monitor='val_accuracy'
+                                                ,save_best_only=True
+                                                )
+
+                        
+    ckpt_callback_path = os.path.join(callback_dir,'checkpoint_cb.cb')
+
+    joblib.dump(checkpoint_callback,ckpt_callback_path)
+    logging.info(f'tensoboard call back is complete and save at {ckpt_callback_path}')
+
