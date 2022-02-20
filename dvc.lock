@@ -1,0 +1,18 @@
+schema: '2.0'
+stages:
+  get_data:
+    cmd: python src/stage_01_get_data.py --config=config/config.yaml
+    deps:
+    - path: config/config.yaml
+      md5: 4f1d25f9d6105ebc6fdde56f55678002
+      size: 643
+    - path: src/stage_01_get_data.py
+      md5: fba41ce907033c3631941993f0ce4c4a
+      size: 1969
+    - path: src/utils/allutills.py
+      md5: 32a886541f98fec1af8aaf2e9d908042
+      size: 1243
+    outs:
+    - path: data/external/rice.tgz
+      md5: d5b068de5aefd88b8e32aa6be1e0b220
+      size: 266573394
