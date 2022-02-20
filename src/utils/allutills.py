@@ -27,9 +27,10 @@ def Create_Dir(Names:List[str]) -> None:
 
 def Unique_Filename(filename:str) -> str:
 
-    Timestamp = time.asctime().replace(" ", "_").replace(" ", "_")
+    Timestamp = time.asctime().replace(" ", "_").replace(":", "_")
     unique_filename = f"{filename}_{Timestamp}"
     logging.info("creating unique filename sucessfully")
+
     return unique_filename
 
 def log_model_summary(model:keras_model) -> keras_summary:
@@ -37,3 +38,7 @@ def log_model_summary(model:keras_model) -> keras_summary:
         model.summary(print_fn=lambda x: stream.write(f"{x}\n"))
         summary_str = stream.getvalue()
     return summary_str
+
+
+if __name__ == '__main__':
+    print(Unique_Filename("sandeep"))

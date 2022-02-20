@@ -3,6 +3,8 @@ from tensorflow import keras
 from typing import List,TypeVar
 from pathlib import Path
 import logging
+from src.utils.allutills import Unique_Filename
+import os
 
 keras_model = TypeVar("keras_model")
 
@@ -47,6 +49,13 @@ def load_full_model(untrain_model_path:Path) -> keras_model:
 
     logging.info("Loading model was successful")
     return model
+
+def get_unique_model_path(train_model_dir:Path,Model_name:str='model') -> Path:
+    
+    unique_filename =  f"{Unique_Filename(Model_name)}_.h5"
+    file_path = os.path.join(train_model_dir,unique_filename)
+    return file_path
+
 
 if __name__ == '__main__':
     model = own_model([48,48,3],num_classes=3,model_path=None)

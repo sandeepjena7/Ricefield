@@ -1,7 +1,7 @@
 
 from src.utils.allutills import Read_Yaml,Create_Dir
 from src.utils.callbacks import get_callbacks
-from src.utils.models import load_full_model
+from src.utils.models import load_full_model,get_unique_model_path
 from src.utils.datamangement import train_valid_genrator
 import argparse
 import  os
@@ -30,7 +30,7 @@ def train_model(config_path:Path,parmas_path:Path) -> None:
                                 ,artifact['Updated_model_path'])
 
     model = load_full_model(untrained_based_model_path)
-    callbacks = get_callbacks(callback_dir)
+    callback = get_callbacks(callback_dir)
 
     train_gen,valid_gen = train_valid_genrator(
                             data_dir=config['data_source']['Process_data_dir']
@@ -39,6 +39,22 @@ def train_model(config_path:Path,parmas_path:Path) -> None:
                             ,do_data_agumentaion=params['augmentation']
                             )
 
+    step_per_train = train_gen.samples // train_gen.batch_size
+    step_per_valid = valid_gen.samples // valid_gen.batch_size
+    
+    logging.info("model was start to train ")
+    model.fit(train_gen
+            , epochs=params['epochs']
+            ,validation_data=valid_gen
+            ,steps_per_epoch=step_per_train
+            ,validation_steps=step_per_valid
+            ,callbacks=callback)
+    
+    logging.info("model was trained successful")
+    
+    model_save_file_path = get_unique_model_path(train_model_dir)
+    model.save(model_save_file_path)
+    logging.info(f"model was saved at {model_save_file_path}")
 
 if __name__ == '__main__':
     args = argparse.ArgumentParser(description='get the data from bucket')
