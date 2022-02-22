@@ -8,6 +8,13 @@ stages:
     outs:
       - data/external/rice.tgz
 
-
+  extract_data:
+    cmd: python src/stage_02_extract_data.py --config=config/config.yaml
+    deps:
+      - src/stage_02_extract_data.py
+      - src/utils/allutills.py
+      - config/config.yaml
+    outs:
+      - data/external/rice.tgz
 
   
