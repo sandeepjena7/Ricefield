@@ -15,6 +15,67 @@ stages:
       - src/utils/allutills.py
       - config/config.yaml
     outs:
-      - data/external/rice.tgz
+      - data/raw
 
-  
+  prepared_data:
+    cmd: python src/stage_03_prepared_data.py --config=config/config.yaml
+    deps:
+      - src/stage_03_prepared_data.py
+      - src/utils/allutills.py
+      - config/config.yaml
+    outs:
+      - data/processed/test
+      - data/processed/train
+      - data/processed/val
+
+  prepared_base_mode:
+    cmd: python src/stage_04_prepared_base_model.py --config=config/config.yaml --params=params.yaml
+    deps:
+      - src/stage_04_prepared_base_model.py
+      - src/utils/models.py
+      - src/utils/allutills.py
+      - config/config.yaml
+      - params.yaml 
+    params:
+      - img_shape
+      - lr
+      - momentum
+      - metrics
+
+    outs:
+      - artifacts/base_model/ownmodel.h5
+      - artifacts/base_model/upadated_ownmodel.h5
+
+  prepared_callbacks:
+    cmd: python src/stage_05_prepared_callback.py --config=config/config.yaml
+    deps:
+      - src/stage_05_prepared_callback.py
+      - src/utils/allutills.py
+      - src/utils/callbacks.py
+      - config/config.yaml
+    outs:
+      - artifacts/callback/checkpoint_cb.cb
+      - artifacts/callback/tensoboard_cb.cb
+
+  train_mode:
+    cmd: python src/stage_06_train_model.py --config=config/config.yaml --params=params.yaml
+    deps:
+      - src/stage_06_train_model.py
+      - src/utils/models.py
+      - src/utils/callbacks.py
+      - src/utils/allutills.py
+      - src/utils/datamangement.py
+      - config/config.yaml
+      - params.yaml 
+      - artifacts/callback/checkpoint_cb.cb
+      - artifacts/callback/tensoboard_cb.cb
+      - artifacts/base_model/upadated_ownmodel.h5
+      - data/processed
+    params:
+      - img_shape
+      - batch_size
+      - augmentation
+      - epochs
+    outs:
+      - artifacts/model
+
