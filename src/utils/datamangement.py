@@ -3,11 +3,12 @@ from typing import Tuple
 from tensorflow import  keras 
 import logging
 import os
+from typing import Generator
 
 def train_valid_genrator(data_dir:Path
                         ,img_size:Tuple[int,int]
                         ,batch_size:int
-                        ,do_data_agumentaion:bool):
+                        ,do_data_agumentaion:bool) -> Generator:
 
 
     datagenarator_kwargs = dict(
