@@ -1,1 +1,4 @@
 /model
+/checkpoints
+/tensorboard_log_dir
+
