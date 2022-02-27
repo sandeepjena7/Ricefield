@@ -136,3 +136,4 @@ src.egg-info
 delete.py
 assets
 mytestsreport.html
+.dvc
