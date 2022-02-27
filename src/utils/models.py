@@ -8,7 +8,8 @@ import os
 
 keras_model = TypeVar("keras_model")
 
-def  own_model(img_shape:List[int],num_classes:int,model_path:Path) -> keras_model:
+
+def own_model(img_shape:List[int],num_classes:int,model_path:Path) -> keras_model:
 
     model = keras.Sequential()
     model.add(keras.layers.Conv2D(8,(3,3),padding='same',kernel_initializer=keras.initializers.HeNormal(),activation='relu',input_shape=tuple(img_shape)))
